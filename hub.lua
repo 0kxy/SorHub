@@ -2,7 +2,7 @@ local ESP = {
    Bones = {},
 }
 
--- Fonction pour créer les os d'un personnage
+
 local function createBones(character)
    if not character or not character:FindFirstChild("Humanoid") then
        return
@@ -15,14 +15,13 @@ local function createBones(character)
        return
    end
 
-   -- Suppression des os existants
    for _, bone in pairs(ESP.Bones) do
        if bone and bone.Parent then
            bone:Destroy()
        end
    end
 
-   -- Création des os
+
    local bones = {}
    for i, child in ipairs(rootPart:GetChildren()) do
        if child:IsA("BasePart") then
@@ -37,11 +36,11 @@ local function createBones(character)
        end
    end
 
-   -- Ajout des os à la table
+
    ESP.Bones = bones
 end
 
--- Fonction pour mettre à jour les os
+
 local function updateBones()
    if next(ESP.Bones) then
        for _, bone in pairs(ESP.Bones) do
@@ -64,15 +63,15 @@ local function updateBones()
      end
  end
  
- -- Événement pour détecter les nouveaux joueurs
+
  game.Players.PlayerAdded:Connect(function(player)
      player.CharacterAdded:Connect(createBones)
  end)
  
- -- Événement pour mettre à jour les os des joueurs existants
+
  game.Players.ChildAdded:Connect(createBones)
  
- -- Tick pour mettre à jour les os en permanence
+
  game:GetService("RunService").Heartbeat:Connect(function()
      updateBones()
  end)
